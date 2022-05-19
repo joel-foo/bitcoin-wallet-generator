@@ -98,6 +98,10 @@ function toggleExpand(i: number) {
 </script>
 
 <style scoped>
+h1 {
+  margin: 0;
+}
+
 .initial-addresses-page,
 .addresses {
   width: 90%;
@@ -106,14 +110,13 @@ function toggleExpand(i: number) {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  padding: 10px;
   max-height: 450px;
 }
 
 .addresses div {
   text-align: left;
   width: 90%;
-  height: 100%;
+  height: 88%;
   overflow: auto;
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
@@ -123,7 +126,7 @@ ul li {
 }
 
 .address-section {
-  height: 100%;
+  height: 88%;
   width: 30%;
   display: flex;
   flex-direction: column;

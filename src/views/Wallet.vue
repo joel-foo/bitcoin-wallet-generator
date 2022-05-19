@@ -89,13 +89,6 @@ onMounted(() => {
   box-shadow: 0 0 3px rgba(22, 119, 216, 0.4);
 }
 
-.btn {
-  margin: 0;
-  width: 100px;
-  height: 60px;
-  font-size: 16px;
-}
-
 .back-btn {
   position: fixed;
   bottom: 10px;

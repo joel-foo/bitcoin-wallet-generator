@@ -164,6 +164,12 @@ input {
   width: 120px;
   border: 1px solid #ccc;
 }
+
+.btn {
+  width: 100px;
+  height: 60px;
+}
+
 .address-btn {
   margin-right: 10px;
   border-radius: 10px;

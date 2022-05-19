@@ -1,4 +1,4 @@
-import { address, payments } from 'bitcoinjs-lib'
+import { payments } from 'bitcoinjs-lib'
 import { useWallets } from '@/stores/useWallets'
 
 export const getAddress = (node: any, network?: any): string => {
@@ -9,9 +9,15 @@ function getItems(key: string): any[] {
   return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)!) : []
 }
 
-const store = useWallets()
-
 export const addressTypes = ['bip32', 'bip44', 'bip49']
+
+export type InfoType = {
+  [key: string]: {
+    [key: string]: string
+  }
+}
+
+const store = useWallets()
 
 export const populateOnMount = () => {
   store.wallets = getItems('xprv')

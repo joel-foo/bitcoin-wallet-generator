@@ -1,5 +1,8 @@
 <template>
-  <BriefWalletOverview v-for="i in store.wallets.length" :key="i" :i="i" />
+  <div v-if="store.wallets.length > 0">
+    <BriefWalletOverview v-for="i in store.wallets.length" :key="i" :i="i" />
+  </div>
+  <h1 v-else>You currently have no wallets</h1>
 </template>
 
 <script setup lang="ts">
