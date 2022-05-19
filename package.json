@@ -7,15 +7,26 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.182",
+    "bip32": "^3.0.1",
+    "bip39": "^3.0.4",
+    "bitcoinjs-lib": "^6.0.1",
     "core-js": "^3.8.3",
+    "ecpair": "^2.0.1",
+    "lodash": "^4.17.21",
+    "pinia": "^2.0.14",
+    "qrcode": "^1.5.0",
+    "tiny-secp256k1": "^2.2.1",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
+    "@types/qrcode": "^1.4.2",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-typescript": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "node-polyfill-webpack-plugin": "^1.1.4",
     "typescript": "~4.5.5"
   }
 }
