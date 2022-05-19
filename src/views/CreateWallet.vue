@@ -97,8 +97,11 @@ const info = ref<InfoType>({
 const isWalletSaved = ref(false)
 
 function genMnemonic([lang, length]: string[]) {
+  console.log(lang, length)
   selectedLanguage.value = lang
   selectedLength.value = length
+  console.log(selectedLanguage.value)
+  console.log(selectedLength.value)
   const bip32 = BIP32Factory(ecc)
 
   mnemonic.value = bip39.generateMnemonic(
