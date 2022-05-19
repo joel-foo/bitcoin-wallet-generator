@@ -99,7 +99,6 @@ const isWalletSaved = ref(false)
 function genMnemonic([lang, length]: string[]) {
   selectedLanguage.value = lang
   selectedLength.value = length
-
   const bip32 = BIP32Factory(ecc)
 
   mnemonic.value = bip39.generateMnemonic(
@@ -111,12 +110,12 @@ function genMnemonic([lang, length]: string[]) {
   //need to force re-render
   count.value++
 
-  const entropyInHex = bip39.mnemonicToEntropy(
-    mnemonic.value,
-    bip39.wordlists[selectedLanguage.value]
-  )
+  // const entropyInHex = bip39.mnemonicToEntropy(
+  //   mnemonic.value,
+  //   bip39.wordlists[selectedLanguage.value]
+  // )
 
-  entropy.value = hex2bin(entropyInHex)
+  // entropy.value = hex2bin(entropyInHex)
 
   const seed = bip39.mnemonicToSeedSync(mnemonic.value)
 
