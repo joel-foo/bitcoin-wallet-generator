@@ -6,7 +6,7 @@
         <select
           name="language"
           id="language"
-          v-model="selectedLanguage"
+          v-model="lang"
           class="mnemonic-select"
         >
           <option
@@ -20,12 +20,7 @@
       </div>
       <div class="select-container">
         <label for="length">Select a length:</label>
-        <select
-          name="length"
-          id="length"
-          v-model="selectedLength"
-          class="mnemonic-select"
-        >
+        <select name="length" id="length" v-model="len" class="mnemonic-select">
           <option
             v-for="(length, index) in [12, 15, 18, 21, 24]"
             :key="index"
@@ -41,33 +36,49 @@
       id="mnemonic"
       cols="40"
       rows="3"
-      v-model="mnemonic"
+      :value="mnemonic"
       :class="[isInvalidMnemonic ? 'invalid' : '', 'mnemonic-textarea']"
       spellcheck="false"
     ></textarea>
-    <button
-      @click="$emit('select-language', [selectedLanguage, selectedLength])"
-      class="btn"
-    >
+    <button @click="$emit('select-language', [lang, len])" class="btn">
       Generate seed
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
-defineEmits<{
-  (e: 'select-language', value: string[]): void
-}>()
-
-defineProps<{
-  selectedLanguage: string
+const props = defineProps<{
   languages: string[]
-  selectedLength: number
   mnemonic: string
   isInvalidMnemonic: boolean
 }>()
+
+const emit = defineEmits<{
+  (e: 'select-language', value: (string | number)[]): void
+}>()
+
+const language = ref<string>('english')
+const length = ref<number>(24)
+
+const lang = computed({
+  get() {
+    return language.value
+  },
+  set(value: string) {
+    language.value = value
+  },
+})
+
+const len = computed({
+  get() {
+    return length.value
+  },
+  set(value: number) {
+    length.value = value
+  },
+})
 </script>
 
 <style scoped>

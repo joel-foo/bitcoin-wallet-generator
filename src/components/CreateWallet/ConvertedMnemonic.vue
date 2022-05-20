@@ -4,7 +4,7 @@
     <select
       name="language"
       id="language"
-      v-model="newSelectedLanguage"
+      v-model="newLang"
       class="mnemonic-select"
     >
       <option
@@ -20,23 +20,36 @@
       id="convertedMnemonic"
       cols="40"
       rows="3"
-      v-model="convertedMnemonic"
+      :value="convertedMnemonic"
       spellcheck="false"
       class="mnemonic-textarea"
     ></textarea>
-    <button @click="$emit('convert-language', newSelectedLanguage)" class="btn">
+    <button @click="$emit('convert-language', newLang)" class="btn">
       Convert seed
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-defineEmits<{
-  (e: 'convert-language', value: string): void
-}>()
-defineProps<{
-  newSelectedLanguage: string
+import { ref, computed } from 'vue'
+
+const props = defineProps<{
   languages: string[]
   convertedMnemonic: string
 }>()
+
+const emits = defineEmits<{
+  (e: 'convert-language', value: string): void
+}>()
+
+const newLanguage = ref<string>('chinese_traditional')
+
+const newLang = computed({
+  get() {
+    return newLanguage.value
+  },
+  set(value: string) {
+    newLanguage.value = value
+  },
+})
 </script>

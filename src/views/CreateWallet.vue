@@ -2,18 +2,16 @@
   <h1>Create your own HD Wallet!</h1>
   <div class="textarea-main-container">
     <Mnemonic
-      :selectedLanguage="selectedLanguage"
       :languages="languages"
-      :selectedLength="selectedLength"
       :mnemonic="mnemonic"
       :isInvalidMnemonic="isInvalidMnemonic"
       @select-language="genMnemonic"
     />
     <convertedMnemonic
-      :newSelectedLanguage="newSelectedLanguage"
       :languages="languages"
       :convertedMnemonic="convertedMnemonic"
-      @convert-language="convertMnemonic"
+      :newSelectedLanguage="newSelectedLanguage"
+      @convert-language="onConvert"
     />
   </div>
   <WalletDetails
@@ -69,8 +67,8 @@ const languages = [
 
 const count = ref(0)
 
-const selectedLanguage = ref('english')
-const selectedLength = ref(24)
+const selectedLanguage = ref<string>('')
+const selectedLength = ref<null | number>(null)
 const mnemonic = ref<string>('')
 
 const isInvalidMnemonic = ref(false)
@@ -101,9 +99,12 @@ const info = ref<InfoType>({
 })
 const isWalletSaved = ref(false)
 
-function genMnemonic([lang, length]: (string | number)[]) {
+function genMnemonic([lang, len]: (string | number)[]) {
   selectedLanguage.value = lang as string
-  selectedLength.value = length as number
+  selectedLength.value = len as number
+
+  count.value++
+
   const bip32 = BIP32Factory(ecc)
 
   mnemonic.value = bip39.generateMnemonic(
@@ -113,8 +114,6 @@ function genMnemonic([lang, length]: (string | number)[]) {
   )
 
   //need to force re-render
-  count.value++
-
   // const entropyInHex = bip39.mnemonicToEntropy(
   //   mnemonic.value,
   //   bip39.wordlists[selectedLanguage.value]
@@ -132,11 +131,18 @@ function genMnemonic([lang, length]: (string | number)[]) {
   chainCode.value = node.chainCode.toString('hex')
   WIF.value = node.toWIF()
 
+  //also convert when generate seed
   convertMnemonic(newSelectedLanguage.value)
+
   isMnemonicGenerated.value = true
 }
+
+function onConvert(n: string) {
+  newSelectedLanguage.value = n
+  convertMnemonic(n)
+}
+
 function convertMnemonic(newLang: string) {
-  newSelectedLanguage.value = newLang
   const isValid = bip39.validateMnemonic(
     mnemonic.value,
     bip39.wordlists[selectedLanguage.value]
@@ -153,7 +159,7 @@ function convertMnemonic(newLang: string) {
   )
   convertedMnemonic.value = bip39.entropyToMnemonic(
     entropy,
-    bip39.wordlists[newSelectedLanguage.value]
+    bip39.wordlists[newLang]
   )
 }
 

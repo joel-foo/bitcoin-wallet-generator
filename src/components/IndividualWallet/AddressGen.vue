@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 import { useWallets } from '@/stores/useWallets'
 import { getAddress, addressTypes } from '@/utils'
 import QRCode from 'qrcode'
