@@ -27,7 +27,7 @@
           class="mnemonic-select"
         >
           <option
-            v-for="(length, index) in lengths"
+            v-for="(length, index) in [12, 15, 18, 21, 24]"
             :key="index"
             :value="length"
           >
@@ -64,12 +64,10 @@ defineEmits<{
 defineProps<{
   selectedLanguage: string
   languages: string[]
-  selectedLength: string
+  selectedLength: number
   mnemonic: string
+  isInvalidMnemonic: boolean
 }>()
-
-const lengths = [12, 15, 18, 21, 24]
-const isInvalidMnemonic = ref(false)
 </script>
 
 <style scoped>

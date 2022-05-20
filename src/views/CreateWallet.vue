@@ -6,6 +6,7 @@
       :languages="languages"
       :selectedLength="selectedLength"
       :mnemonic="mnemonic"
+      :isInvalidMnemonic="isInvalidMnemonic"
       @select-language="genMnemonic"
     />
     <convertedMnemonic
@@ -67,12 +68,16 @@ const languages = [
 ]
 
 const count = ref(0)
-const mnemonic = ref<string>('')
-const convertedMnemonic = ref<string>('')
+
 const selectedLanguage = ref('english')
-const newSelectedLanguage = ref('chinese_traditional')
-const selectedLength = ref('24')
+const selectedLength = ref(24)
+const mnemonic = ref<string>('')
+
 const isInvalidMnemonic = ref(false)
+
+const newSelectedLanguage = ref('chinese_traditional')
+const convertedMnemonic = ref<string>('')
+
 const isMnemonicGenerated = ref(false)
 const entropy = ref<string>('')
 
@@ -96,16 +101,13 @@ const info = ref<InfoType>({
 })
 const isWalletSaved = ref(false)
 
-function genMnemonic([lang, length]: string[]) {
-  console.log(lang, length)
-  selectedLanguage.value = lang
-  selectedLength.value = length
-  console.log(selectedLanguage.value)
-  console.log(selectedLength.value)
+function genMnemonic([lang, length]: (string | number)[]) {
+  selectedLanguage.value = lang as string
+  selectedLength.value = length as number
   const bip32 = BIP32Factory(ecc)
 
   mnemonic.value = bip39.generateMnemonic(
-    128 + (32 * (parseInt(selectedLength.value) - 12)) / 3,
+    128 + (32 * (selectedLength.value - 12)) / 3,
     RNG(64),
     bip39.wordlists[selectedLanguage.value]
   )
@@ -158,7 +160,7 @@ function convertMnemonic(newLang: string) {
 function resetPage() {
   mnemonic.value = ''
   convertedMnemonic.value = ''
-  selectedLength.value = '24'
+  selectedLength.value = 24
   selectedLanguage.value = 'english'
   newSelectedLanguage.value = 'chinese_traditional'
   entropy.value = ''
