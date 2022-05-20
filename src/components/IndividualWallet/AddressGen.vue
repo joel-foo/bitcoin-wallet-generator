@@ -148,6 +148,7 @@ function genQR() {
 .add-info {
   max-width: 80vw;
   word-break: break-all;
+  height: 100%;
 }
 
 .path-container form {

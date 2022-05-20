@@ -51,7 +51,6 @@ h1 {
   flex-direction: column;
   height: 80%;
   width: 90%;
-  gap: 20px;
   justify-content: center;
   align-items: center;
   max-height: 450px;
@@ -65,13 +64,14 @@ h1 {
   font-size: 14px;
   text-align: left;
   width: 100%;
+  height: 100%;
 }
 
 .container > div textarea {
-  min-width: 60%;
+  width: 70%;
   font-size: inherit;
   font-family: inherit;
-  height: 90px;
+  height: 80%;
   padding: 10px;
   resize: none;
 }
@@ -85,8 +85,11 @@ h1 {
   .arrow-down-icon {
     display: none;
   }
-  .container > div textarea {
-    height: 70px;
+}
+
+@media only screen and (max-height: 750px) {
+  .container {
+    gap: 0px;
   }
 }
 </style>

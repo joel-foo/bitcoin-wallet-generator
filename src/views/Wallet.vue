@@ -120,7 +120,7 @@ input:focus {
   cursor: pointer;
 }
 
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 992px) and (min-height: 590px) {
   .row {
     flex-direction: row;
   }
@@ -137,6 +137,10 @@ input:focus {
   }
   .arrow-down-icon {
     display: none;
+  }
+  .address-info {
+    height: 100%;
+    min-height: 50vh;
   }
 }
 </style>
