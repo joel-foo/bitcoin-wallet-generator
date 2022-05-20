@@ -16,11 +16,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 const isSidebarOpen = ref(false)
 function toggleSidebar() {
   isSidebarOpen.value = !isSidebarOpen.value
 }
+onMounted(() => {
+  document.addEventListener('click', (e) => {
+    if (
+      isSidebarOpen.value &&
+      !(e.target as HTMLElement).classList.contains('navbar') &&
+      !(e.target as HTMLElement).classList.contains('list-icon')
+    ) {
+      isSidebarOpen.value = false
+    }
+  })
+})
 </script>
 
 <style>
