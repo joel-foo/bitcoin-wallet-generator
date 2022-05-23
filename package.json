@@ -1,40 +1,28 @@
 {
   "name": "btcwallet",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "electron:build": "vue-cli-service electron:build",
-    "electron:serve": "vue-cli-service electron:serve",
-    "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps"
+    "build": "vue-cli-service build"
   },
-  "main": "background.js",
   "dependencies": {
     "bip32": "^3.0.1",
     "bip39": "^3.0.4",
     "bitcoinjs-lib": "^6.0.1",
-    "core-js": "^3.8.3",
     "ecpair": "^2.0.1",
     "pinia": "^2.0.14",
     "qrcode": "^1.5.0",
     "tiny-secp256k1": "^2.2.1",
-    "ts-loader": "~8.2.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
-    "@types/electron-devtools-installer": "^2.2.0",
     "@types/qrcode": "^1.4.2",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-typescript": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "electron": "^13.0.0",
-    "electron-devtools-installer": "^3.1.0",
     "node-polyfill-webpack-plugin": "^1.1.4",
-    "typescript": "~4.5.5",
-    "vue-cli-plugin-electron-builder": "~2.1.1"
+    "typescript": "~4.5.5"
   }
 }

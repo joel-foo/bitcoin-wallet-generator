@@ -36,3 +36,5 @@ const router = createRouter({
 })
 
 export default router
+
+//createWebHistory(process.env.BASE_URL)
