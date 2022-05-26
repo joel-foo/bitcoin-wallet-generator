@@ -1,38 +1,20 @@
 <template>
-  <i class="bi bi-list list-icon" @click="toggleSidebar"></i>
-  <div :class="['navbar', isSidebarOpen ? 'open' : 'closed']">
-    <i class="bi bi-x x-icon" @click="toggleSidebar"></i>
-    <router-link to="/">Home</router-link>
-    <router-link to="/create-wallet">Create a wallet!</router-link>
-    <router-link to="/wallets">Wallets</router-link>
-    <img
-      id="bitcoin-nav"
-      src="https://bitcoin.org/img/icons/logotop.svg?1651392467"
-      alt=""
-    />
-    <!-- <router-link to="/utxo-checker">UTXO Checker</router-link> -->
-  </div>
+  <nav>
+    <ul>
+      <li><router-link to="/" class="nav-link">home</router-link></li>
+      <li><router-link to="/about" class="nav-link">about</router-link></li>
+      <li>
+        <router-link to="/download" class="nav-link">download</router-link>
+      </li>
+      <li>
+        <router-link to="/playground" class="nav-link">playground</router-link>
+      </li>
+    </ul>
+  </nav>
   <router-view />
 </template>
 
-<script setup lang="ts">
-import { onMounted, ref } from 'vue'
-const isSidebarOpen = ref(false)
-function toggleSidebar() {
-  isSidebarOpen.value = !isSidebarOpen.value
-}
-onMounted(() => {
-  document.addEventListener('click', (e) => {
-    if (
-      isSidebarOpen.value &&
-      !(e.target as HTMLElement).classList.contains('navbar') &&
-      !(e.target as HTMLElement).classList.contains('list-icon')
-    ) {
-      isSidebarOpen.value = false
-    }
-  })
-})
-</script>
+<script setup lang="ts"></script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@200&family=Montserrat:wght@300;600&display=swap');
@@ -45,7 +27,6 @@ body,
 html {
   padding: 0;
   margin: 0;
-  height: 100%;
 }
 
 #app {
@@ -55,67 +36,43 @@ html {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: #8ec5fc;
-  background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
+  /* background-color: #8ec5fc;
+  background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%); */
   min-height: 100vh;
 }
 
-.navbar {
-  position: fixed;
-  left: 0;
+nav {
+  position: absolute;
   top: 0;
-  background-color: #8ec5fc;
-  background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
-  z-index: 999;
-  height: 100%;
-  padding: 20px;
-  width: 160px;
+  right: 10px;
+  z-index: 9999;
 }
 
-.navbar a,
-.x-icon {
-  display: block;
-  margin-bottom: 40px;
+nav ul {
+  list-style-type: none;
+  display: flex;
+  gap: 10px;
+}
+
+.nav-link {
   text-decoration: none;
   color: black;
+  opacity: 0.75;
+  position: relative;
 }
 
-.navbar a:hover {
-  text-decoration: underline;
+.nav-link::before {
+  transition: 300ms;
+  height: 5px;
+  width: 0%;
+  bottom: -5px;
+  content: '';
+  position: absolute;
+  background-color: #feda48;
 }
 
-.list-icon,
-.x-icon {
-  font-size: 40px;
-}
-
-.list-icon {
-  position: fixed;
-  left: 10px;
-  top: 0;
-  z-index: 999;
-}
-
-.list-icon:hover,
-.x-icon:hover {
-  cursor: pointer;
-}
-
-.navbar.open {
-  transform: translateX(0%);
-  transition: transform 0.4s linear;
-}
-
-.navbar.closed {
-  transform: translateX(-100%);
-  transition: transform 0.4s linear;
-}
-
-#bitcoin-nav {
-  position: fixed;
-  bottom: 30px;
-  left: 30px;
-  width: 100px;
+.nav-link:hover::before {
+  width: 100%;
 }
 
 .btn {
@@ -125,15 +82,36 @@ html {
   padding: 5px;
   outline: 0;
   border: 0;
-  background-color: #ffdee9;
-  background-image: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%);
   border-radius: 5px;
   font-family: inherit;
   font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn:hover {
   cursor: pointer;
   transform: scale(1.02);
+}
+
+.grid-container {
+  display: grid;
+  gap: 10px;
+}
+
+.grid-container > div {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90vw;
+  border-radius: 5px;
+}
+
+.grid-container > div i {
+  font-size: 40px;
 }
 </style>

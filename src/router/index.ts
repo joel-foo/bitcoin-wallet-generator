@@ -25,6 +25,21 @@ const routes: Array<RouteRecordRaw> = [
     name: 'utxo-checker',
     component: () => import('../views/UTXOChecker.vue'),
   },
+  {
+    path: '/about',
+    name: 'about',
+    component: () => import('../views/AboutView.vue'),
+  },
+  {
+    path: '/download',
+    name: 'download',
+    component: () => import('../views/Download.vue'),
+  },
+  {
+    path: '/playground',
+    name: 'playground',
+    component: () => import('../views/Playground.vue'),
+  },
 ]
 
 const router = createRouter({

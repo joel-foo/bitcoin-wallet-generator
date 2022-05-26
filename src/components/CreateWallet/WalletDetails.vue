@@ -79,9 +79,11 @@ store.$subscribe((mutation, state) => {
 
 <style scoped>
 .wallet-info {
-  height: 700px;
-  margin: 30px 0 30px;
+  margin-bottom: 10px;
+  height: 750px;
   gap: 15px;
+  grid-column: 1/-1;
+  width: auto;
 }
 
 .wallet-info > div {
@@ -96,13 +98,14 @@ store.$subscribe((mutation, state) => {
 .info-icon {
   position: absolute;
   left: 40px;
+  /* color: #486cfe; */
 }
 
 .info-icon:hover {
   /* add text bubble */
 }
 
-.wallet-info textarea {
+textarea {
   width: 100%;
   height: 90px;
   font-size: 14px;
@@ -117,7 +120,7 @@ store.$subscribe((mutation, state) => {
   gap: 10px;
 }
 
-.btn-container .btn {
+.btn {
   margin: 0;
 }
 
@@ -127,23 +130,22 @@ store.$subscribe((mutation, state) => {
   width: 100%;
 }
 
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 800px) {
   .btn-container {
     max-height: 70px;
   }
   .wallet-info {
-    width: 760px;
+    height: 650px;
   }
   .wallet-info > div {
-    width: 700px;
+    width: 90%;
     flex-direction: row;
   }
-  .wallet-info textarea {
-    width: 500px;
+  textarea {
+    width: 480px;
     margin-left: auto;
   }
   .info-icon {
-    right: unset;
     bottom: 20px;
     left: 10px;
   }

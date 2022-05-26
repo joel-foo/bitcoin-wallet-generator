@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="grid-single-wallet">
     <WalletInfo
       :xprv="xprv"
       :mnemonic="mnemonic"
@@ -7,19 +7,23 @@
       :wif="wif"
       :id="id"
     />
-    <AddressList :id="id" :selectedAddressType="selectedAddressType" />
+    <AddressList
+      :id="id"
+      :selectedAddressType="selectedAddressType"
+      :isEmpty="isEmpty"
+    />
+    <AddressGen
+      :id="id"
+      :root="root"
+      :key="count"
+      :selectedAddressType="selectedAddressType"
+      @select-address="updateAddress"
+    />
   </div>
-  <AddressGen
-    :id="id"
-    :root="root"
-    :key="count"
-    :selectedAddressType="selectedAddressType"
-    @select-address="updateAddress"
-  />
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref, computed, ComputedRef } from 'vue'
 import { useWallets } from '../stores/useWallets'
 import { populateOnMount } from '../utils'
 import BIP32Factory, { BIP32Interface } from 'bip32'
@@ -49,6 +53,21 @@ const wif = ref<string>('')
 //to force re-render to ensure props ('root', 'selectedAddressType' are the most updated)
 const count = ref(0)
 
+//is selected address page empty?
+const isEmpty = computed<string | boolean>(
+  () =>
+    selectedAddressType.value &&
+    convert(`bip${selectedAddressType.value}`).length === 0
+)
+
+//parser function
+function convert(addType: string): string[] {
+  return store.addresses[addType][id.value]
+    ? JSON.parse(store.addresses[addType][id.value])
+    : []
+}
+
+//executes on receiving select-address emit
 function updateAddress(addType: string) {
   selectedAddressType.value = addType
   count.value++
@@ -68,9 +87,12 @@ onMounted(() => {
 </script>
 
 <style>
-.row {
-  display: flex;
-  flex-direction: column;
+.grid-single-wallet {
+  display: grid;
+}
+
+h1 {
+  /* color: #486cfe; */
 }
 
 .main-card,
@@ -80,23 +102,29 @@ onMounted(() => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #8ec5fc;
-  background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
   height: 100vh;
   width: 100vw;
   font-size: 16px;
   position: relative;
-  box-shadow: 0 0 3px rgba(22, 119, 216, 0.4);
+  /* border: 1px solid black; */
+  padding: 30px;
+}
+
+.address-list {
+  height: 50vh;
+}
+
+.address-info {
+  /* 100% may be > 50vh */
+  min-height: 50vh;
+  height: 100%;
+  grid-column: 1/-1;
 }
 
 .back-btn {
   position: fixed;
   bottom: 10px;
   left: 10px;
-}
-
-p.title {
-  font-weight: 600;
 }
 
 .arrow-down-icon,
@@ -121,26 +149,25 @@ input:focus {
 }
 
 @media only screen and (min-width: 992px) and (min-height: 590px) {
-  .row {
-    flex-direction: row;
+  .grid-single-wallet {
+    grid-template-columns: 1fr 1fr;
   }
+
   .main-card,
   .address-info,
   .address-list {
     height: 50vh;
     width: 50vw;
-    background-color: unset;
-    background-image: unset;
   }
+
   .address-info {
-    width: 100vw;
+    width: auto;
+    min-height: 50vh;
+    height: 100%;
   }
+
   .arrow-down-icon {
     display: none;
-  }
-  .address-info {
-    height: 100%;
-    min-height: 50vh;
   }
 }
 </style>

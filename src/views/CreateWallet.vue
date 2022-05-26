@@ -1,6 +1,8 @@
 <template>
-  <h1>Create your own HD Wallet!</h1>
-  <div class="textarea-main-container">
+  <h1 style="margin: 30px 0 30px; font-size: 24px; font-weight: 600">
+    Create your own HD Wallet!
+  </h1>
+  <div class="grid-create">
     <Mnemonic
       :languages="languages"
       :mnemonic="mnemonic"
@@ -13,16 +15,16 @@
       :newSelectedLanguage="newSelectedLanguage"
       @convert-language="onConvert"
     />
+    <WalletDetails
+      :info="info"
+      :mnemonic="mnemonic"
+      :isMnemonicGenerated="isMnemonicGenerated"
+      :isWalletSaved="isWalletSaved"
+      @save-wallet="isWalletSaved = true"
+      @reset-page="resetPage"
+      :key="count"
+    />
   </div>
-  <WalletDetails
-    :info="info"
-    :mnemonic="mnemonic"
-    :isMnemonicGenerated="isMnemonicGenerated"
-    :isWalletSaved="isWalletSaved"
-    @save-wallet="isWalletSaved = true"
-    @reset-page="resetPage"
-    :key="count"
-  />
 </template>
 
 <script setup lang="ts">
@@ -181,10 +183,9 @@ function resetPage() {
 </script>
 
 <style>
-h1 {
-  margin: 30px 0 30px;
-  font-size: 22px;
-  font-weight: 600;
+.grid-create {
+  display: grid;
+  gap: 10px;
 }
 
 .center-fcol-card {
@@ -195,40 +196,33 @@ h1 {
   justify-content: center;
   align-items: center;
   border-radius: 3px;
-  padding: 10px;
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
 
-.textarea-main-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .mnemonic-textarea {
-  outline: 0;
-  border: 1px solid rgb(143, 141, 141);
+  outline: 1px solid rgb(143, 141, 141);
+  border: 1px solid transparent;
   margin: 10px 0 0;
   font-family: inherit;
   font-size: 18px;
   padding: 10px;
   height: 150px;
-  width: 335px;
+  width: 90%;
   resize: none;
 }
 
 .mnemonic-select {
-  width: 150px;
+  width: 145px;
   font-family: inherit;
   margin: 10px 0 10px;
 }
 
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 800px) {
   h1 {
     font-size: 30px;
   }
-  .textarea-main-container {
-    flex-direction: row;
+  .grid-create {
+    grid-template-columns: 1fr 1fr;
   }
 }
 </style>

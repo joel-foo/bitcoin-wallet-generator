@@ -1,12 +1,16 @@
 <template>
   <div class="wallet">
     <h2>Wallet {{ i }}</h2>
-    <div>
-      Extended private key: <textarea v-model="store.wallets[i - 1]"></textarea>
-    </div>
-    <div>
-      Mnemonic:
-      <textarea v-model="store.mnemonics[i - 1]"></textarea>
+    <i class="bi bi-pencil-square edit-icon" @click="editName"></i>
+    <div class="info">
+      <div>
+        <p>Extended private key:</p>
+        <textarea v-model="store.wallets[i - 1]"></textarea>
+      </div>
+      <div>
+        <p>Mnemonic:</p>
+        <textarea v-model="store.mnemonics[i - 1]"></textarea>
+      </div>
     </div>
     <button class="btn" @click="$router.push(`/wallet/${i}`)">
       View wallet
@@ -22,6 +26,8 @@ import { addressTypes } from '@/utils'
 defineProps<{ i: number }>()
 
 const store = useWallets()
+
+function editName() {}
 
 function handleDelete(index: number) {
   let isConfirmed = confirm(
@@ -50,32 +56,44 @@ store.$subscribe((mutation, state) => {
 <style scoped>
 .wallet {
   width: 90vw;
+  height: 450px;
   display: flex;
   flex-direction: column;
-  height: 450px;
-  border-radius: 3px;
-  margin-bottom: 30px;
   justify-content: center;
   align-items: center;
   position: relative;
-  font-size: 18px;
+  font-size: 16px;
+  padding: 20px;
   gap: 10px;
+  border: 0;
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
-  margin-top: 30px;
 }
 
-.wallet > div {
+.info {
   width: 90%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.info > div {
+  width: 100%;
   height: 100px;
   display: flex;
   align-items: center;
-  justify-content: center;
   text-align: left;
   position: relative;
 }
 
+p {
+  width: 30%;
+}
+
 textarea {
-  min-width: 75%;
+  width: 60%;
   height: 100%;
   margin-left: auto;
   font-family: inherit;
@@ -88,18 +106,32 @@ textarea:focus {
   outline: 0;
 }
 
+.edit-icon {
+  position: absolute;
+  top: 70px;
+  right: 30%;
+}
+
 .trash-icon {
   position: absolute;
   top: 10px;
   right: 10px;
 }
 
-.trash-icon:hover {
+.trash-icon:hover,
+.edit-icon:hover {
   cursor: pointer;
+  color: #486cfe;
 }
 
 .btn {
   font-size: inherit;
+}
+
+@media only screen and (min-width: 800px) {
+  .wallet {
+    width: 45vw;
+  }
 }
 
 @media only screen and (max-width: 450px) {

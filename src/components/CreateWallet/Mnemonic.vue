@@ -84,10 +84,10 @@ const len = computed({
 <style scoped>
 .select-containers {
   display: flex;
+  width: 90%;
 }
 
 textarea.invalid {
-  border: 1px solid transparent;
   outline: 1px solid red;
 }
 </style>

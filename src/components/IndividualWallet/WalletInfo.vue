@@ -43,17 +43,15 @@ function scrollDown() {
 </script>
 
 <style scoped>
-h1 {
-  margin: 0;
-}
 .container {
   display: flex;
   flex-direction: column;
   height: 80%;
-  width: 90%;
+  width: 100%;
   justify-content: center;
   align-items: center;
   max-height: 450px;
+  gap: 10px;
 }
 
 .container > div {
@@ -61,35 +59,30 @@ h1 {
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
   text-align: left;
   width: 100%;
   height: 100%;
+  max-width: 600px;
 }
 
 .container > div textarea {
-  width: 70%;
+  width: 65%;
   font-size: inherit;
   font-family: inherit;
-  height: 80%;
   padding: 10px;
+  height: 100%;
   resize: none;
 }
 
 .container > div p {
   margin-right: auto;
-  max-width: 30%;
+  width: 20%;
 }
 
 @media only screen and (min-width: 992px) {
   .arrow-down-icon {
     display: none;
-  }
-}
-
-@media only screen and (max-height: 750px) {
-  .container {
-    gap: 0px;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="address-list">
     <h1 v-if="!selectedAddressType">Addresses Generated</h1>
-    <h1 v-else>BIP{{ selectedAddressType }} Addresses Generated</h1>
+    <h1 v-else>BIP{{ selectedAddressType }} Addresses</h1>
     <!-- initial overview page -->
     <div v-if="!selectedAddressType" class="initial-addresses-page">
       <div
@@ -12,23 +12,21 @@
         @click="toggleExpand(i)"
       >
         <p id="address-title">{{ addressType }}</p>
-        <div>
-          <ul v-if="convert(addressType).length !== 0">
-            <li v-for="(address, i) in convert(addressType)" :key="i">
-              {{ address }}
-            </li>
-          </ul>
-          <ul v-else>
-            You currently have no addresses
-          </ul>
-        </div>
+        <ul v-if="convert(addressType).length !== 0">
+          <li v-for="(address, i) in convert(addressType)" :key="i">
+            {{ address }}
+          </li>
+        </ul>
+        <ul v-else>
+          You currently have no addresses
+        </ul>
       </div>
     </div>
 
     <!-- individual address page  -->
     <div v-else class="addresses">
-      <div>
-        <ul v-if="convert(`bip${selectedAddressType}`).length !== 0">
+      <div :class="['addresses-inner', isEmpty ? 'center' : '']">
+        <ul v-if="!isEmpty">
           <li
             v-for="(address, i) in convert(`bip${selectedAddressType}`)"
             :key="i"
@@ -36,18 +34,14 @@
             {{ address }}
           </li>
         </ul>
-        <p style="text-align: center" v-else>No such addresses</p>
+        <p v-else>No such addresses</p>
       </div>
     </div>
-    <i
-      class="bi bi-arrow-down-square-fill arrow-down-icon"
-      @click="scrollDown"
-    ></i>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useWallets } from '@/stores/useWallets'
 import { addressTypes } from '@/utils'
 
@@ -56,7 +50,13 @@ const store = useWallets()
 const { id } = defineProps<{
   id: number
   selectedAddressType: string
+  isEmpty: string | boolean
 }>()
+
+//note: if isEmpty is string it can only be '', which will evaluate to falsy
+
+const isExpand = ref(false)
+const selected = ref(null)
 
 function convert(addType: string): string[] {
   //need to check if array exists because populateOnMount is only called in onMounted(). thus return empty [] initially as fallback
@@ -65,27 +65,20 @@ function convert(addType: string): string[] {
     : []
 }
 
-function scrollDown() {
-  document
-    .querySelector('.address-info')!
-    .scrollIntoView({ behavior: 'smooth' })
-}
-
-const isExpand = ref(false)
-const selected = ref(null)
-
+//toggle expansion
 function toggleExpand(i: number) {
   const selectedEl = document.getElementById(`section-${i}`)!
 
-  if (selectedEl.classList.contains('expand')) {
-    selectedEl.classList.remove('expand')
-    return
-  }
+  const isOpen = selectedEl.classList.contains('expand')
 
   document.querySelectorAll('.address-section').forEach((el) => {
     el.classList.remove('expand')
     el.classList.remove('min')
   })
+
+  if (isOpen) {
+    return
+  }
 
   selectedEl.classList.add('expand')
 
@@ -98,43 +91,41 @@ function toggleExpand(i: number) {
 </script>
 
 <style scoped>
-h1 {
-  margin: 0;
-}
-
 .initial-addresses-page,
 .addresses {
-  width: 90%;
+  width: 100%;
   height: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  max-height: 450px;
 }
 
-.addresses div {
+/* individual address page */
+.addresses-inner {
   text-align: left;
-  width: 90%;
-  height: 88%;
+  width: 100%;
+  height: 100%;
   overflow: auto;
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
 
-ul li {
-  padding: 5px;
+.addresses-inner.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* individual address section in overview */
 .address-section {
-  height: 88%;
-  width: 30%;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  width: 33%;
   position: relative;
   font-size: 14px;
   transition: 0.3s linear;
   text-align: left;
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  overflow: auto;
 }
 
 .address-section:hover {
@@ -142,22 +133,11 @@ ul li {
 }
 
 .address-section.expand {
-  width: 50%;
+  width: 65%;
 }
 
 .address-section.min {
-  width: 30%;
-}
-
-.address-section ul {
-  margin-top: 50px;
-  padding: 0;
-}
-
-.address-section > div {
-  overflow: auto;
-  height: 100%;
-  padding-left: 20px;
+  width: 17%;
 }
 
 #address-title {
@@ -166,6 +146,15 @@ ul li {
   transform: translateX(-50%);
   text-transform: uppercase;
   font-weight: 600;
+}
+
+.address-section ul {
+  margin-top: 50px;
+  padding-left: 20px;
+}
+
+ul li {
+  padding: 5px;
 }
 
 @media only screen and (min-width: 992px) {

@@ -6,7 +6,7 @@
       v-if="selectedAddressType"
     ></i>
 
-    <p v-if="!selectedAddressType" style="width: 70vw; line-height: 40px">
+    <p v-if="!selectedAddressType" style="line-height: 40px">
       What kind of address do you want to generate?
     </p>
 
@@ -22,7 +22,7 @@
     </div>
 
     <div class="add-info" v-else>
-      <p class="title">BIP{{ selectedAddressType }}</p>
+      <p style="font-weight: bold; margin: 0">BIP{{ selectedAddressType }}</p>
       <div class="path-container">
         <p>Select your derivation path:</p>
         <form>
@@ -40,9 +40,15 @@
             v-model="addressInput"
           />
         </form>
-        <p class="error-msg" v-show="error">Invalid path! Try again</p>
+        <p class="error-msg" v-show="error">
+          <i class="bi bi-exclamation-circle-fill" style="margin-right: 5px"></i
+          >Invalid path! Try again
+        </p>
+
+        <button class="btn address" @click="clickGenAdd">
+          Generate address
+        </button>
       </div>
-      <button class="btn address" @click="clickGenAdd">Generate address</button>
       <p>{{ resultAddress }}</p>
       <canvas id="canvas"></canvas>
     </div>
@@ -132,7 +138,7 @@ function genQR() {
   QRCode.toCanvas(
     document.getElementById('canvas'),
     qrMessage,
-    { width: 150 },
+    { width: 140 },
     function (error) {
       if (error) console.error(error)
     }
@@ -141,29 +147,47 @@ function genQR() {
 </script>
 
 <style scoped>
+p {
+  margin: 10px 0 10px;
+}
+
 .address-info {
   font-size: 20px;
 }
 
 .add-info {
-  max-width: 80vw;
+  width: 80vw;
   word-break: break-all;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.path-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .path-container form {
   line-height: 40px;
 }
 
-.path-container {
-  position: relative;
+.error-msg {
+  color: red;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 input {
-  font-size: inherit;
+  font-size: 18px;
   font-family: inherit;
-  width: 120px;
+  width: 80px;
   border: 1px solid #ccc;
+  height: 30px;
 }
 
 .btn {
@@ -181,28 +205,16 @@ input {
   border: 1px solid transparent;
   font-family: inherit;
   font-size: 24px;
-  background-color: #ffdee9;
-  background-image: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%);
 }
 
-.error-msg {
-  color: red;
-  font-weight: bold;
-  font-size: 16px;
-  position: absolute;
-  bottom: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 400px;
-}
 .address-btn:hover {
-  border: 1px solid #d58af5;
+  border: 1px solid #feda48;
 }
 
 .btn.address {
   width: 160px;
   height: 40px;
-  margin-top: 35px;
+  margin-top: 10px;
 }
 
 .backspace-icon {
