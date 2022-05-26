@@ -15,17 +15,16 @@
     <AddressGen
       :id="id"
       :root="root"
-      :key="count"
       :selectedAddressType="selectedAddressType"
-      @select-address="updateAddress"
+      @select-address="(addType) => (selectedAddressType = addType)"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed, ComputedRef } from 'vue'
+import { ref, computed } from 'vue'
 import { useWallets } from '../stores/useWallets'
-import { populateOnMount } from '../utils'
+import { populateStore } from '../utils'
 import BIP32Factory, { BIP32Interface } from 'bip32'
 import * as ecc from 'tiny-secp256k1'
 import { useRoute } from 'vue-router'
@@ -39,60 +38,36 @@ const route = useRoute()
 
 const store = useWallets()
 
+//populate store with xprv, mnemonic, addresses...
+populateStore()
+
 //props
-const id = computed<number>(() => parseInt(route.params.id as string) - 1)
-const root = ref<BIP32Interface | null>(null)
+const id = ref<number>(parseInt(route.params.id as string) - 1)
+
+const xprv = ref<string>(store.wallets[id.value])
+
+const mnemonic = ref<string>(store.mnemonics[id.value])
+
+const root = ref<BIP32Interface>(bip32.fromBase58(xprv.value))
+
+const xpub = ref<string>(root.value.neutered().toBase58())
+
+const wif = ref<string>(root.value.neutered().toBase58())
+
 const selectedAddressType = ref<string>('')
-
-// wallet info
-const xpub = ref<string>('')
-const xprv = ref<string>('')
-const mnemonic = ref<string>('')
-const wif = ref<string>('')
-
-//to force re-render to ensure props ('root', 'selectedAddressType' are the most updated)
-const count = ref(0)
 
 //is selected address page empty?
 const isEmpty = computed<string | boolean>(
   () =>
     selectedAddressType.value &&
-    convert(`bip${selectedAddressType.value}`).length === 0
+    JSON.parse(store.addresses[`bip${selectedAddressType.value}`][id.value])
+      .length === 0
 )
-
-//parser function
-function convert(addType: string): string[] {
-  return store.addresses[addType][id.value]
-    ? JSON.parse(store.addresses[addType][id.value])
-    : []
-}
-
-//executes on receiving select-address emit
-function updateAddress(addType: string) {
-  selectedAddressType.value = addType
-  count.value++
-}
-
-//populate store on mount
-onMounted(() => {
-  populateOnMount()
-  xprv.value = store.wallets[id.value]
-  mnemonic.value = store.mnemonics[id.value]
-  root.value = bip32.fromBase58(xprv.value)
-  //force rerender of AddressGen to ensure 'root' prop is updated
-  count.value++
-  xpub.value = root.value.neutered().toBase58()
-  wif.value = root.value.toWIF()
-})
 </script>
 
 <style>
 .grid-single-wallet {
   display: grid;
-}
-
-h1 {
-  /* color: #486cfe; */
 }
 
 .main-card,
@@ -106,7 +81,6 @@ h1 {
   width: 100vw;
   font-size: 16px;
   position: relative;
-  /* border: 1px solid black; */
   padding: 30px;
 }
 

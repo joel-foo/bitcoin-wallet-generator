@@ -12,7 +12,7 @@
         <textarea v-model="store.mnemonics[i - 1]"></textarea>
       </div>
     </div>
-    <button class="btn" @click="$router.push(`/wallet/${i}`)">
+    <button class="btn" @click="$router.push(`/playground/wallet/${i}`)">
       View wallet
     </button>
     <i class="bi bi-trash trash-icon" @click="handleDelete(i - 1)"></i>

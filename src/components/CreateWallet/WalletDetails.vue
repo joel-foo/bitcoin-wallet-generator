@@ -23,7 +23,7 @@
       <button
         class="btn choice-btn"
         v-if="isWalletSaved"
-        @click="$router.push(`/wallet/${store.wallets.length}`)"
+        @click="$router.push(`/playground/wallet/${store.wallets.length}`)"
       >
         View new wallet!
       </button>

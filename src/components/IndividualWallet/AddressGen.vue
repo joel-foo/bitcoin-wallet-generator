@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, toRefs } from 'vue'
 import { useWallets } from '@/stores/useWallets'
 import { getAddress, addressTypes } from '@/utils'
 import QRCode from 'qrcode'
@@ -68,11 +68,15 @@ import { BIP32Interface } from 'bip32'
 let timeout: NodeJS.Timeout
 
 //refs are automatically unwrapped when they are accessed as props, hence no need to append .value
-const { id, root, selectedAddressType } = defineProps<{
+const props = defineProps<{
   id: number
   root: BIP32Interface
   selectedAddressType: string
 }>()
+
+const { id, root } = props
+//without toRefs, any destructured reactivity will decouple from the reactive proxy and lose reactivity
+const { selectedAddressType } = toRefs(props)
 
 const emit = defineEmits<{ (e: 'select-address', value: string): void }>()
 
@@ -94,14 +98,15 @@ function clickGenAdd() {
   genAddress()
   !error.value && genQR()
 }
+
 function genAddress() {
-  const path = `m/${selectedAddressType}'/${cointype.value}/${account.value}/${change.value}/${addressInput.value}`
+  const path = `m/${selectedAddressType.value}'/${cointype.value}/${account.value}/${change.value}/${addressInput.value}`
   try {
     const child = root.derivePath(path)
     console.log(child.privateKey!.toString('hex'))
     resultAddress.value = getAddress(child)
 
-    const addType = `bip${selectedAddressType}`
+    const addType = `bip${selectedAddressType.value}`
 
     const initialState: string[] = JSON.parse(store.addresses[addType][id])
 
@@ -126,11 +131,8 @@ function genAddress() {
 
 //update local storage upon state mutation
 store.$subscribe((mutation, state) => {
-  //do not run on initial render
-  if (selectedAddressType) {
-    const addType = `bip${selectedAddressType}`
-    localStorage.setItem(addType, JSON.stringify(state.addresses[addType]))
-  }
+  const addType = `bip${selectedAddressType.value}`
+  localStorage.setItem(addType, JSON.stringify(state.addresses[addType]))
 })
 
 function genQR() {

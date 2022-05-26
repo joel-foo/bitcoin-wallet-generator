@@ -1,10 +1,10 @@
 <template>
   <div class="grid">
-    <div class="action" @click="$router.push(`/create-wallet`)">
+    <div class="action" @click="$router.push(`/playground/create-wallet`)">
       Create a wallet!
       <i class="bi bi-hammer icon"></i>
     </div>
-    <div class="action" @click="$router.push(`/wallets`)">
+    <div class="action" @click="$router.push(`/playground/wallets`)">
       View exisiting wallets
       <i class="bi bi-wallet2 icon"></i>
     </div>

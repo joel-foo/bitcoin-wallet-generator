@@ -12,8 +12,8 @@
         @click="toggleExpand(i)"
       >
         <p id="address-title">{{ addressType }}</p>
-        <ul v-if="convert(addressType).length !== 0">
-          <li v-for="(address, i) in convert(addressType)" :key="i">
+        <ul v-if="parse(addressType).length !== 0">
+          <li v-for="(address, i) in parse(addressType)" :key="i">
             {{ address }}
           </li>
         </ul>
@@ -28,7 +28,7 @@
       <div :class="['addresses-inner', isEmpty ? 'center' : '']">
         <ul v-if="!isEmpty">
           <li
-            v-for="(address, i) in convert(`bip${selectedAddressType}`)"
+            v-for="(address, i) in parse(`bip${selectedAddressType}`)"
             :key="i"
           >
             {{ address }}
@@ -56,13 +56,9 @@ const { id } = defineProps<{
 //note: if isEmpty is string it can only be '', which will evaluate to falsy
 
 const isExpand = ref(false)
-const selected = ref(null)
 
-function convert(addType: string): string[] {
-  //need to check if array exists because populateOnMount is only called in onMounted(). thus return empty [] initially as fallback
-  return store.addresses[addType][id]
-    ? JSON.parse(store.addresses[addType][id])
-    : []
+function parse(addType: string): string[] {
+  return JSON.parse(store.addresses[addType][id])
 }
 
 //toggle expansion

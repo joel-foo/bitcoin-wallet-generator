@@ -19,7 +19,7 @@ export type InfoType = {
 
 const store = useWallets()
 
-export const populateOnMount = () => {
+export const populateStore = () => {
   store.wallets = getItems('xprv')
   store.mnemonics = getItems('mnemonics')
   for (let type of addressTypes) {

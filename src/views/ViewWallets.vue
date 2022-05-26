@@ -7,15 +7,12 @@
 
 <script setup lang="ts">
 import { useWallets } from '../stores/useWallets'
-import { onMounted } from 'vue'
 import BriefWalletOverview from '../components/BriefWalletOverview.vue'
-import { populateOnMount } from '@/utils'
+import { populateStore } from '@/utils'
 
 const store = useWallets()
 
-onMounted(() => {
-  populateOnMount()
-})
+populateStore()
 </script>
 
 <style scoped>

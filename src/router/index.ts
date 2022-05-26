@@ -1,24 +1,10 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { RouterView } from 'vue-router'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
     component: () => import('../views/HomeView.vue'),
-  },
-  {
-    path: '/create-wallet',
-    name: 'create-wallet',
-    component: () => import('../views/CreateWallet.vue'),
-  },
-  {
-    path: '/wallet/:id',
-    name: 'wallet',
-    component: () => import('../views/Wallet.vue'),
-  },
-  {
-    path: '/wallets',
-    name: 'wallets',
-    component: () => import('../views/ViewWallets.vue'),
   },
   {
     path: '/utxo-checker',
@@ -38,7 +24,28 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/playground',
     name: 'playground',
-    component: () => import('../views/Playground.vue'),
+    component: RouterView,
+    children: [
+      {
+        path: '',
+        component: () => import('../views/Playground.vue'),
+      },
+      {
+        path: 'create-wallet',
+        name: 'create-wallet',
+        component: () => import('../views/CreateWallet.vue'),
+      },
+      {
+        path: 'wallets',
+        name: 'wallets',
+        component: () => import('../views/ViewWallets.vue'),
+      },
+      {
+        path: 'wallet/:id',
+        name: 'wallet',
+        component: () => import('../views/Wallet.vue'),
+      },
+    ],
   },
 ]
 
