@@ -52,14 +52,14 @@
       <p>{{ resultAddress }}</p>
       <canvas id="canvas"></canvas>
     </div>
-    <button class="btn back-btn" @click="$router.push(`/wallets`)">
+    <button class="btn back-btn" @click="$router.push(`/playground/wallets`)">
       Back to Wallets
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs } from 'vue'
+import { ref, toRef } from 'vue'
 import { useWallets } from '@/stores/useWallets'
 import { getAddress, addressTypes } from '@/utils'
 import QRCode from 'qrcode'
@@ -75,8 +75,8 @@ const props = defineProps<{
 }>()
 
 const { id, root } = props
-//without toRefs, any destructured reactivity will decouple from the reactive proxy and lose reactivity
-const { selectedAddressType } = toRefs(props)
+//without toRef, any destructured reactivity will decouple from the reactive proxy and lose reactivity
+const selectedAddressType = toRef(props, 'selectedAddressType')
 
 const emit = defineEmits<{ (e: 'select-address', value: string): void }>()
 

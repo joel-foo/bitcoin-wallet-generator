@@ -42,6 +42,7 @@
 import { useWallets } from '@/stores/useWallets'
 import { addressTypes } from '@/utils'
 import { InfoType } from '@/utils'
+import { toRef } from 'vue-demi'
 
 const store = useWallets()
 
@@ -50,18 +51,22 @@ const emit = defineEmits<{
   (e: 'reset-page'): void
 }>()
 
-const { info, mnemonic } = defineProps<{
+const props = defineProps<{
   info: InfoType
   mnemonic: string
   isMnemonicGenerated: boolean
   isWalletSaved: boolean
 }>()
 
+//note that info maintains its reactivity as it is a nested object
+
+const mnemonic = toRef(props, 'mnemonic')
+
 function saveWallet() {
   emit('save-wallet')
   store.$patch((state) => {
-    state.wallets.push(info.xprv.value)
-    state.mnemonics.push(mnemonic)
+    state.wallets.push(props.info.xprv.value)
+    state.mnemonics.push(mnemonic.value)
     for (let type of addressTypes) {
       state.addresses[type].push('[]')
     }

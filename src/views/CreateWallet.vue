@@ -22,7 +22,6 @@
       :isWalletSaved="isWalletSaved"
       @save-wallet="isWalletSaved = true"
       @reset-page="resetPage"
-      :key="count"
     />
   </div>
 </template>
@@ -67,8 +66,6 @@ const languages = [
   'spanish',
 ]
 
-const count = ref(0)
-
 const selectedLanguage = ref<string>('')
 const selectedLength = ref<null | number>(null)
 const mnemonic = ref<string>('')
@@ -101,11 +98,9 @@ const info = ref<InfoType>({
 })
 const isWalletSaved = ref(false)
 
-function genMnemonic([lang, len]: (string | number)[]) {
+async function genMnemonic([lang, len]: (string | number)[]) {
   selectedLanguage.value = lang as string
   selectedLength.value = len as number
-
-  count.value++
 
   const bip32 = BIP32Factory(ecc)
 
@@ -114,7 +109,6 @@ function genMnemonic([lang, len]: (string | number)[]) {
     RNG(64),
     bip39.wordlists[selectedLanguage.value]
   )
-
   //need to force re-render
   // const entropyInHex = bip39.mnemonicToEntropy(
   //   mnemonic.value,
@@ -123,7 +117,7 @@ function genMnemonic([lang, len]: (string | number)[]) {
 
   // entropy.value = hex2bin(entropyInHex)
 
-  const seed = bip39.mnemonicToSeedSync(mnemonic.value)
+  const seed = await bip39.mnemonicToSeed(mnemonic.value)
 
   const node = bip32.fromSeed(seed)
 
