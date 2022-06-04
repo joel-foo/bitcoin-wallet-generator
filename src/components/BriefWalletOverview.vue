@@ -53,29 +53,24 @@ store.$subscribe((mutation, state) => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '@/assets/styles/general';
+
 .wallet {
   width: 90vw;
   height: 450px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include flex-col-center;
   position: relative;
   font-size: 16px;
   padding: 20px;
   gap: 10px;
-  border: 0;
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
 
 .info {
   width: 90%;
   max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include flex-col-center;
   gap: 10px;
 }
 
@@ -98,14 +93,8 @@ textarea {
   margin-left: auto;
   font-family: inherit;
   font-size: inherit;
-  resize: none;
   padding: 10px;
 }
-
-textarea:focus {
-  outline: 0;
-}
-
 .edit-icon {
   position: absolute;
   top: 70px;
@@ -120,7 +109,6 @@ textarea:focus {
 
 .trash-icon:hover,
 .edit-icon:hover {
-  cursor: pointer;
   color: #486cfe;
 }
 

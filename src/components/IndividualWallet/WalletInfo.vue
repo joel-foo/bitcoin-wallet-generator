@@ -42,22 +42,20 @@ function scrollDown() {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '@/assets/styles/general';
+
 .container {
-  display: flex;
-  flex-direction: column;
   height: 80%;
   width: 100%;
-  justify-content: center;
-  align-items: center;
+  @include flex-col-center;
   max-height: 450px;
   gap: 10px;
+  margin-top: 20px;
 }
 
 .container > div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-row-center;
   font-weight: bold;
   font-size: 16px;
   text-align: left;
@@ -72,7 +70,6 @@ function scrollDown() {
   font-family: inherit;
   padding: 10px;
   height: 100%;
-  resize: none;
 }
 
 .container > div p {

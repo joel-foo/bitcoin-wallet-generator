@@ -148,7 +148,9 @@ function genQR() {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '@/assets/styles/general';
+
 p {
   margin: 10px 0 10px;
 }
@@ -160,18 +162,12 @@ p {
 .add-info {
   width: 80vw;
   word-break: break-all;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include flex-col-center;
 }
 
 .path-container {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include flex-col-center;
 }
 
 .path-container form {
@@ -203,7 +199,6 @@ input {
   padding: 10px;
   height: 100px;
   width: 100px;
-  outline: 0;
   border: 1px solid transparent;
   font-family: inherit;
   font-size: 24px;

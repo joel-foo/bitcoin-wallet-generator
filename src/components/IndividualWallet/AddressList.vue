@@ -86,15 +86,16 @@ function toggleExpand(i: number) {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '@/assets/styles/general';
+
 .initial-addresses-page,
 .addresses {
   width: 100%;
   height: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-row-center;
   gap: 10px;
+  margin-top: 20px;
 }
 
 /* individual address page */
@@ -107,9 +108,7 @@ function toggleExpand(i: number) {
 }
 
 .addresses-inner.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-row-center;
 }
 
 /* individual address section in overview */
@@ -139,14 +138,20 @@ function toggleExpand(i: number) {
 #address-title {
   position: absolute;
   left: 50%;
+  top: 15px;
   transform: translateX(-50%);
   text-transform: uppercase;
   font-weight: 600;
 }
 
-.address-section ul {
+.address-section ul,
+.addresses ul {
   margin-top: 50px;
-  padding-left: 20px;
+  padding-left: 30px;
+}
+
+.addresses ul {
+  margin-top: 20px;
 }
 
 ul li {

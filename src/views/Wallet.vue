@@ -1,24 +1,26 @@
 <template>
-  <div class="grid-single-wallet">
-    <WalletInfo
-      :xprv="xprv"
-      :mnemonic="mnemonic"
-      :xpub="xpub"
-      :wif="wif"
-      :id="id"
-    />
-    <AddressList
-      :id="id"
-      :selectedAddressType="selectedAddressType"
-      :isEmpty="isEmpty"
-    />
-    <AddressGen
-      :id="id"
-      :root="root"
-      :selectedAddressType="selectedAddressType"
-      @select-address="(addType) => (selectedAddressType = addType)"
-    />
-  </div>
+  <section>
+    <div class="grid-single-wallet">
+      <WalletInfo
+        :xprv="xprv"
+        :mnemonic="mnemonic"
+        :xpub="xpub"
+        :wif="wif"
+        :id="id"
+      />
+      <AddressList
+        :id="id"
+        :selectedAddressType="selectedAddressType"
+        :isEmpty="isEmpty"
+      />
+      <AddressGen
+        :id="id"
+        :root="root"
+        :selectedAddressType="selectedAddressType"
+        @select-address="(addType) => (selectedAddressType = addType)"
+      />
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -65,7 +67,9 @@ const isEmpty = computed<string | boolean>(
 )
 </script>
 
-<style>
+<style lang="scss">
+@import '@/assets/styles/general';
+
 .grid-single-wallet {
   display: grid;
 }
@@ -73,10 +77,7 @@ const isEmpty = computed<string | boolean>(
 .main-card,
 .address-info,
 .address-list {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include flex-col-center;
   height: 100vh;
   width: 100vw;
   font-size: 16px;
@@ -109,17 +110,6 @@ const isEmpty = computed<string | boolean>(
 
 .arrow-down-icon {
   bottom: 10px;
-}
-
-textarea:focus,
-input:focus {
-  border: 1px solid transparent;
-  outline: 1px solid steelblue;
-}
-
-.address-btn:hover,
-.backspace-icon:hover {
-  cursor: pointer;
 }
 
 @media only screen and (min-width: 992px) and (min-height: 590px) {

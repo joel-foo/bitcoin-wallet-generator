@@ -1,29 +1,31 @@
 <template>
-  <h1 style="margin: 30px 0 30px; font-size: 24px; font-weight: 600">
-    Create your own HD Wallet!
-  </h1>
-  <div class="grid-create">
-    <Mnemonic
-      :languages="languages"
-      :mnemonic="mnemonic"
-      :isInvalidMnemonic="isInvalidMnemonic"
-      @select-language="genMnemonic"
-    />
-    <convertedMnemonic
-      :languages="languages"
-      :convertedMnemonic="convertedMnemonic"
-      :newSelectedLanguage="newSelectedLanguage"
-      @convert-language="onConvert"
-    />
-    <WalletDetails
-      :info="info"
-      :mnemonic="mnemonic"
-      :isMnemonicGenerated="isMnemonicGenerated"
-      :isWalletSaved="isWalletSaved"
-      @save-wallet="isWalletSaved = true"
-      @reset-page="resetPage"
-    />
-  </div>
+  <section>
+    <h1 style="margin-bottom: 30px; font-size: 24px">
+      Create your own HD Wallet!
+    </h1>
+    <div class="grid-create">
+      <Mnemonic
+        :languages="languages"
+        :mnemonic="mnemonic"
+        :isInvalidMnemonic="isInvalidMnemonic"
+        @select-language="genMnemonic"
+      />
+      <convertedMnemonic
+        :languages="languages"
+        :convertedMnemonic="convertedMnemonic"
+        :newSelectedLanguage="newSelectedLanguage"
+        @convert-language="onConvert"
+      />
+      <WalletDetails
+        :info="info"
+        :mnemonic="mnemonic"
+        :isMnemonicGenerated="isMnemonicGenerated"
+        :isWalletSaved="isWalletSaved"
+        @save-wallet="isWalletSaved = true"
+        @reset-page="resetPage"
+      />
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -109,7 +111,7 @@ async function genMnemonic([lang, len]: (string | number)[]) {
     RNG(64),
     bip39.wordlists[selectedLanguage.value]
   )
-  //need to force re-render
+
   // const entropyInHex = bip39.mnemonicToEntropy(
   //   mnemonic.value,
   //   bip39.wordlists[selectedLanguage.value]
@@ -176,33 +178,33 @@ function resetPage() {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import '@/assets/styles/general';
+
+section {
+  padding: 30px;
+}
+
 .grid-create {
   display: grid;
   gap: 10px;
 }
 
 .center-fcol-card {
-  display: flex;
-  flex-direction: column;
+  @include flex-col-center;
   width: 370px;
   height: 350px;
-  justify-content: center;
-  align-items: center;
   border-radius: 3px;
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
 
 .mnemonic-textarea {
-  outline: 1px solid rgb(143, 141, 141);
-  border: 1px solid transparent;
   margin: 10px 0 0;
   font-family: inherit;
   font-size: 18px;
   padding: 10px;
   height: 150px;
   width: 90%;
-  resize: none;
 }
 
 .mnemonic-select {

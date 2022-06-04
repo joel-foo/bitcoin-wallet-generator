@@ -82,9 +82,10 @@ store.$subscribe((mutation, state) => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '@/assets/styles/general';
+
 .wallet-info {
-  margin-bottom: 10px;
   height: 750px;
   gap: 15px;
   grid-column: 1/-1;
@@ -94,16 +95,14 @@ store.$subscribe((mutation, state) => {
 .wallet-info > div {
   width: 300px;
   height: 120px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  @include flex-col-center;
   position: relative;
 }
 
 .info-icon {
   position: absolute;
-  left: 40px;
-  /* color: #486cfe; */
+  left: 10px;
+  top: 0px;
 }
 
 .info-icon:hover {
@@ -117,21 +116,16 @@ textarea {
 }
 
 .btn-container {
-  margin: 0;
-  padding: 0;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   gap: 10px;
 }
 
-.btn {
-  margin: 0;
-}
-
 .choice-btn {
   margin: 0;
-  height: 50px;
+  height: 100%;
+  max-height: 50px;
   width: 100%;
 }
 
@@ -151,8 +145,7 @@ textarea {
     margin-left: auto;
   }
   .info-icon {
-    bottom: 20px;
-    left: 10px;
+    top: 20px;
   }
 }
 </style>

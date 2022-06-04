@@ -1,30 +1,31 @@
 <template>
-  <div class="grid">
-    <div class="action" @click="$router.push(`/playground/create-wallet`)">
-      Create a wallet!
-      <i class="bi bi-hammer icon"></i>
+  <section>
+    <div class="grid">
+      <div class="action" @click="$router.push(`/playground/create-wallet`)">
+        Create a wallet!
+        <i class="bi bi-hammer icon"></i>
+      </div>
+      <div class="action" @click="$router.push(`/playground/wallets`)">
+        View exisiting wallets
+        <i class="bi bi-wallet2 icon"></i>
+      </div>
     </div>
-    <div class="action" @click="$router.push(`/playground/wallets`)">
-      View exisiting wallets
-      <i class="bi bi-wallet2 icon"></i>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts"></script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '@/assets/styles/general';
+
 .grid {
   display: grid;
   gap: 10px;
 }
 .action {
+  @include flex-col-center;
   width: 90vw;
   height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background-color: #486cfe;
   color: white;
   /* color: #feda48; */
@@ -32,6 +33,7 @@
   gap: 20px;
   border-radius: 5px;
 }
+
 .action:hover {
   cursor: pointer;
 }

@@ -7,11 +7,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/HomeView.vue'),
   },
   {
-    path: '/utxo-checker',
-    name: 'utxo-checker',
-    component: () => import('../views/UTXOChecker.vue'),
-  },
-  {
     path: '/about',
     name: 'about',
     component: () => import('../views/AboutView.vue'),

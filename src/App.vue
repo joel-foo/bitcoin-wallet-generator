@@ -16,36 +16,83 @@
 
 <script setup lang="ts"></script>
 
-<style>
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@200&family=Montserrat:wght@300;600&display=swap');
+@import '@/assets/styles/general';
 
 * {
   box-sizing: border-box;
 }
 
+html,
 body,
-html {
-  padding: 0;
+div,
+h1,
+h2,
+h5,
+p,
+a,
+img,
+ul,
+li,
+form,
+label,
+table,
+canvas,
+footer,
+nav {
   margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+button,
+textarea {
+  outline: 0;
+  border: 0;
+}
+
+textarea {
+  resize: none;
+  outline: 1px solid rgb(143, 141, 141);
+  border: 1px solid transparent;
+}
+
+textarea:focus,
+input:focus {
+  border: 1px solid transparent;
+  outline: 1px solid steelblue;
+}
+
+button,
+i {
+  cursor: pointer;
+}
+
+html,
+body {
+  width: 100%;
 }
 
 #app {
   font-family: 'Montserrat', sans-serif;
   text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  /* background-color: #8ec5fc;
-  background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%); */
-  min-height: 100vh;
+  @include flex-col-center;
+  width: 100%;
+}
+
+#app > section {
+  min-height: calc(100vh - 60px);
+  @include flex-col-center;
 }
 
 nav {
-  position: absolute;
-  top: 0;
-  right: 10px;
-  z-index: 9999;
+  background-color: #2e50d8;
+  z-index: 999;
+  width: 100%;
+  padding: 20px;
+  @include flex-row-center;
+  justify-content: flex-end;
 }
 
 nav ul {
@@ -56,7 +103,7 @@ nav ul {
 
 .nav-link {
   text-decoration: none;
-  color: black;
+  color: white;
   opacity: 0.75;
   position: relative;
 }
@@ -80,18 +127,13 @@ nav ul {
   width: 150px;
   height: 40px;
   padding: 5px;
-  outline: 0;
-  border: 0;
   border-radius: 5px;
   font-family: inherit;
   font-size: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-row-center;
 }
 
 .btn:hover {
-  cursor: pointer;
   transform: scale(1.02);
 }
 
@@ -103,10 +145,7 @@ nav ul {
 .grid-container > div {
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
   height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include flex-col-center;
   width: 90vw;
   border-radius: 5px;
 }
@@ -114,4 +153,7 @@ nav ul {
 .grid-container > div i {
   font-size: 40px;
 }
+
+// @media screen and (max-width: ) {
+// }
 </style>
