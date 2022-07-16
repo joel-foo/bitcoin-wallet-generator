@@ -1,7 +1,6 @@
 <template>
   <div class="wallet">
     <h2>Wallet {{ i }}</h2>
-    <i class="bi bi-pencil-square edit-icon" @click="editName"></i>
     <div class="info">
       <div>
         <p>Extended private key:</p>
@@ -26,8 +25,6 @@ import { addressTypes } from '@/utils'
 defineProps<{ i: number }>()
 
 const store = useWallets()
-
-function editName() {}
 
 function handleDelete(index: number) {
   let isConfirmed = confirm(

@@ -25,6 +25,21 @@
       <p style="font-weight: bold; margin: 0">BIP{{ selectedAddressType }}</p>
       <div class="path-container">
         <p>Select your derivation path:</p>
+        <p style="font-size: 16px">
+          (i.e.m/{{ selectedAddressType }}'/0'/0/0/1)
+        </p>
+        <ul
+          style="
+            font-style: italic;
+            font-size: 14px;
+            word-break: break-word;
+            text-align: left;
+            margin-bottom: 20px;
+          "
+        >
+          <li>numbers with ' denote hardened keys</li>
+          <li>numbers without ' denote unhardened keys.</li>
+        </ul>
         <form>
           m/{{ selectedAddressType }}'/<input
             type="text"

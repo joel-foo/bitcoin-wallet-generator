@@ -1,11 +1,11 @@
 <template>
   <nav>
     <ul>
-      <li><router-link to="/" class="nav-link">home</router-link></li>
+      <!-- <li><router-link to="/" class="nav-link">home</router-link></li>
       <li><router-link to="/about" class="nav-link">about</router-link></li>
       <li>
         <router-link to="/download" class="nav-link">download</router-link>
-      </li>
+      </li> -->
       <li>
         <router-link to="/playground" class="nav-link">playground</router-link>
       </li>
